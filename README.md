@@ -51,3 +51,7 @@ EMAIL_USER=22222222222222
 EMAIL_PASS=1111111111111111111
 
 RECIPIENT_EMAIL=666666666666666666666666666
+
+
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+ docker exec -it postgres-rt psql -U root -d rtdatabase

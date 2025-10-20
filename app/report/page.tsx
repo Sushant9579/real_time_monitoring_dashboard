@@ -66,7 +66,16 @@ export default function Report() {
         console.error("Error fetching Machine Status:", err);
       }
     };
-
+    const fetchAlarmStatus = async () => {
+      try {
+        const res = await fetch("/api/checkalarm");
+        const data = await res.json();
+        if (data.success) setAlarmStatus(data.machines);
+      } catch (err) {
+        console.error("Error fetching while Machine Status:", err);
+      }
+    };
+    fetchAlarmStatus();
     fetchMachineStatus();
   }, [router]);
 
@@ -111,8 +120,8 @@ export default function Report() {
 
   // --- Color status helper
   const getStatusColor = (machine: string) => {
-    if (machineStatus[machine]) return "bg-green-500";
     if (alarmStatus[machine]) return "bg-yellow-500";
+    if (machineStatus[machine]) return "bg-green-500";
     return "bg-red-500";
   };
 

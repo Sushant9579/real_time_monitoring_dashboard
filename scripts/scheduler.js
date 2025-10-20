@@ -1,17 +1,41 @@
 import mqtt from "mqtt";
 
-//  MQTT setup
-const brokerUrl = "mqtt://broker.hivemq.com"; // Public broker (or replace with your local one)
+// ========== MQTT Setup ==========
+const brokerUrl = "mqtt://broker.hivemq.com"; // Public HiveMQ broker
 const topic = "rtdashboardtopic";
-const mqttClient = mqtt.connect(brokerUrl);
+
+// Add connection options (unique clientId is mandatory for public broker)
+const options = {
+  clientId: "rtdash_" + Math.random().toString(16).substr(2, 8),
+  clean: true,
+  connectTimeout: 4000,
+  reconnectPeriod: 2000, // try reconnecting every 2s
+};
+
+// Connect to the MQTT broker
+const mqttClient = mqtt.connect(brokerUrl, options);
 
 mqttClient.on("connect", () => {
   console.log(" Connected to MQTT broker:", brokerUrl);
 });
 
-mqttClient.on("error", (err) => {
-  console.error(" MQTT Connection Error:", err);
+mqttClient.on("reconnect", () => {
+  console.log("Reconnecting to MQTT broker...");
 });
+
+mqttClient.on("close", () => {
+  console.log(" MQTT connection closed");
+});
+
+mqttClient.on("offline", () => {
+  console.log(" MQTT is offline");
+});
+
+mqttClient.on("error", (err) => {
+  console.error("MQTT Connection Error:", err.message);
+});
+
+// ========== Data Simulation Functions ==========
 
 // Generate random double value
 function randomDouble(min, max) {
@@ -25,7 +49,7 @@ function getMachineByHour(hour) {
   return "Machine 3";
 }
 
-// Format date to DD-MM-YYYY HH:mm:ss
+// Format date to DDMMYYYY HHmmss
 function formatDate(date) {
   const dd = String(date.getDate()).padStart(2, "0");
   const mm = String(date.getMonth() + 1).padStart(2, "0");
@@ -36,38 +60,46 @@ function formatDate(date) {
   return `${dd}${mm}${yyyy} ${hh}${min}${ss}`;
 }
 
-// Function to  publish
+// ========== Publisher Function ==========
 async function insertAndPublishData() {
   try {
     const date = new Date();
     const machine = getMachineByHour(date.getHours());
     const dtFormatted = formatDate(date);
-    const Mqttdate = dtFormatted.split(' ')[0]
-    const Mqtttime = dtFormatted.split(' ')[1]
+    const [Mqttdate, Mqtttime] = dtFormatted.split(" ");
+
     const data = {
-      P1:machine,
-      P2: randomDouble(20, 100),//motor_temperature
-      P3: randomDouble(0.05, 10),//vibration
-      P4: randomDouble(100, 2000),//speed
-      P5: randomDouble(20, 90),//bearing_temperature
-      P6: randomDouble(1, 100),//load_current
-      P7: randomDouble(1, 80),//power_consumption
-      P8: randomDouble(0.001, 10),//oil_pressure
+      P1: machine, // machine name
+      P2: randomDouble(20, 100),  // motor_temperature
+      P3: randomDouble(0.05, 10), // vibration
+      P4: randomDouble(100, 2000),// speed
+      P5: randomDouble(20, 90),   // bearing_temperature
+      P6: randomDouble(1, 100),   // load_current
+      P7: randomDouble(1, 80),    // power_consumption
+      P8: randomDouble(0.001, 10),// oil_pressure
       date: Mqttdate,
       time: Mqtttime,
     };
 
     // Publish to MQTT topic
-    mqttClient.publish(topic, JSON.stringify(data));
-    //console.log(`Sent to MQTT topic "${topic}" at ${dtFormatted}`);
-
+    mqttClient.publish(topic, JSON.stringify(data), { qos: 0 }, (err) => {
+      if (err) {
+        console.error("Publish error:", err.message);
+      } else {
+       // console.log(` Published to "${topic}" at ${dtFormatted}`);
+      }
+    });
   } catch (err) {
     console.error("Error publishing data:", err);
   }
 }
 
-// Send data every 1 second
-setInterval(insertAndPublishData, 4000);
+// ========== Schedule Publishing ==========
+setInterval(insertAndPublishData, 1000); //240000)  every 4 minutes
+
+// Optional: publish once immediately when starting
+insertAndPublishData();
+
 
 // import pool from '../lib/db.js';
 // import cron from 'node-cron';
