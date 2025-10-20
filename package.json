@@ -2,26 +2,45 @@
   "name": "rtdash",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev --turbopack",
+    "dev": "concurrently \"node scripts/scheduler.js\" \"node scripts/mqttDataInsert.js\" \"node scripts/alarms.js\" \"next dev --turbopack\"",
     "build": "next build --turbopack",
     "start": "next start",
     "lint": "eslint"
   },
   "dependencies": {
+    "@syncfusion/ej2-react-circulargauge": "^31.1.17",
+    "canvas-gauges": "^2.1.7-radial",
+    "date-fns": "^4.1.0",
+    "dotenv": "^17.2.3",
+    "highcharts": "^12.4.0",
+    "highcharts-react-official": "^3.2.3",
+    "mqtt": "^5.14.1",
+    "next": "15.5.2",
+    "node-cron": "^4.2.1",
+    "nodemailer": "^7.0.9",
+    "pg": "^8.16.3",
     "react": "19.1.0",
+    "react-datepicker": "^8.7.0",
     "react-dom": "19.1.0",
-    "next": "15.5.2"
+    "react-icons": "^5.5.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
+    "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "tailwindcss": "^4",
+    "@types/canvas-gauges": "^2.1.8",
+    "@types/node": "^24.7.2",
+    "@types/pg": "^8.15.5",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19",
+    "concurrently": "^9.2.1",
     "eslint": "^9",
     "eslint-config-next": "15.5.2",
-    "@eslint/eslintrc": "^3"
+    "tailwindcss": "^4",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.9.3"
   }
 }

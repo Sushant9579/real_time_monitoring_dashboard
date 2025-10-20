@@ -34,3 +34,20 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+#####################################################################  DATA  ##############################
+npx ts-node scripts/scheduler.ts
+################################################################################
+
+
+##########################     Parameters      #########################################
+POSTGRES_USER=****
+POSTGRES_PASSWORD=****
+POSTGRES_DB=rtdatabase
+DATABASE_URL=postgresql://8888:*****@localhost:5433/rtdatabase
+
+EMAIL_USER=22222222222222
+EMAIL_PASS=1111111111111111111
+
+RECIPIENT_EMAIL=666666666666666666666666666
