@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "concurrently \"node scripts/scheduler.js\" \"node scripts/mqttDataInsert.js\" \"node scripts/alarms.js\" \"next dev --turbopack\"",
     "build": "next build --turbopack",
-    "start": "next start",
+    "start": "concurrently \"node scripts/scheduler.js\" \"node scripts/mqttDataInsert.js\" \"node scripts/alarms.js\" \"next start\"",
     "lint": "eslint"
   },
   "dependencies": {

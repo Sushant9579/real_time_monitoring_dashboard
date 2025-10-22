@@ -28,11 +28,11 @@ export default function Trend() {
    useEffect(()=>{
       const istrue = localStorage.getItem('User');
       if(!istrue){
-        router.push('/login')
+        router.push(`${process.env.NEXT_PUBLIC_API_URL}/login`)
       }
   const fetchMachineStatus = async () => {
       try {
-        const res = await fetch("/api/checkmachine");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkmachine`);
         const data = await res.json();
         if (data.success) setMachineStatus(data.machines);
       } catch (err) {
@@ -41,7 +41,7 @@ export default function Trend() {
     };
     const fetchAlarmStatus = async () => {
       try {
-        const res = await fetch("/api/checkalarm");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkalarm`);
         const data = await res.json();
         if (data.success) setAlarmStatus(data.machines);
       } catch (err) {
@@ -57,7 +57,7 @@ export default function Trend() {
       if(machineName !== null){
         const hoursDatafunc = async () =>{
        try {
-        const res = await fetch(`/api/trend/last24h/${machineName}/`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/trend/last24h/${machineName}/`);
         const data = await res.json();
         if (data.success) setHoursData(data.data);
       } catch (err) {
@@ -66,7 +66,7 @@ export default function Trend() {
         }
         const DateDatafunc = async () =>{
         try {
-        const res = await fetch(`/api/trend/datewise/${machineName}/`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/trend/datewise/${machineName}/`);
         const data = await res.json();
         if (data.success) setDateData(data.data);
       } catch (err) {
@@ -75,7 +75,7 @@ export default function Trend() {
         }
         const MonthDatafunc = async () =>{
         try {
-        const res = await fetch(`/api/trend/monthwise/${machineName}/`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/trend/monthwise/${machineName}/`);
         const data = await res.json();
         if (data.success) setMonthData(data.data);
       } catch (err) {

@@ -39,11 +39,11 @@ export default function DataLog() {
   // Check user login
   useEffect(() => {
     const user = localStorage.getItem("User");
-    if (!user) router.push("/login");
+    if (!user) router.push(`${process.env.NEXT_PUBLIC_API_URL}/login`);
 
     const fetchMachineStatus = async () => {
       try {
-        const res = await fetch("/api/checkmachine");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkmachine`);
         const data = await res.json();
         if (data.success) setMachineStatus(data.machines);
       } catch (err) {
@@ -52,7 +52,7 @@ export default function DataLog() {
     };
     const fetchAlarmStatus = async () => {
       try {
-        const res = await fetch("/api/checkalarm");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkalarm`);
         const data = await res.json();
         if (data.success) setAlarmStatus(data.machines);
       } catch (err) {
@@ -75,7 +75,7 @@ export default function DataLog() {
 
       try {
         const res = await fetch(
-          `/api/datalog/datewise/${machineName}?start=${parsedStartDate}&end=${parsedEndDate}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/datalog/datewise/${machineName}?start=${parsedStartDate}&end=${parsedEndDate}`
         );
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "API Error");
@@ -90,7 +90,7 @@ export default function DataLog() {
       if (!timeRange) return;
 
       try {
-        const res = await fetch(`/api/datalog/valuewise/${machineName}?value=${timeRange}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/datalog/valuewise/${machineName}?value=${timeRange}`);
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || "API Error");
         setDropDownValue(data.data);

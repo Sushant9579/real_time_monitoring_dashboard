@@ -36,7 +36,7 @@ export async function GET(req: Request) {
     if (rows.length === 0)
       return NextResponse.json({ success: true, data: [] });
 
-    const machines: Record<string, any[]> = {};
+    const machines: Record<string, typeof rows> = {};
     rows.forEach((r) => {
       if (!machines[r.machine]) machines[r.machine] = [];
       machines[r.machine].push(r);

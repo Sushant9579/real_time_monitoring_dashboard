@@ -52,10 +52,11 @@ export async function GET(request: Request, { params }: { params: Promise<{ mach
       count: result.rowCount,
       data: result.rows,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching range data:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { success: false, message: "Error fetching machine data", error: error.message },
+      { success: false, message: "Error fetching machine data", error: errorMessage },
       { status: 500 }
     );
   }

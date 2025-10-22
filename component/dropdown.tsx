@@ -28,13 +28,13 @@ export default function AppDropdown() {
   }, []);
 
   const links = [
-    { name: "Dashboard", href: "/" },
-    { name: "Trend", href: "/trend" },
-    { name: "Custom Trend", href: "/ctrend" },
-    { name: "Data Log", href: "/datalog" },
-    { name: "Report", href: "/report" },
-    ...(showAll ? [{ name: "User", href: "/user" }] : []),
-    ...(showAlarm ? [{ name: "Alarms", href: "/alarm" }] : []),
+    { name: "Dashboard", href: `${process.env.NEXT_PUBLIC_API_URL}/` },
+    { name: "Trend", href: `${process.env.NEXT_PUBLIC_API_URL}/trend` },
+    { name: "Custom Trend", href: `${process.env.NEXT_PUBLIC_API_URL}/ctrend` },
+    { name: "Data Log", href: `${process.env.NEXT_PUBLIC_API_URL}/datalog` },
+    { name: "Report", href: `${process.env.NEXT_PUBLIC_API_URL}/report` },
+    ...(showAll ? [{ name: "User", href: `${process.env.NEXT_PUBLIC_API_URL}/user` }] : []),
+    ...(showAlarm ? [{ name: "Alarms", href: `${process.env.NEXT_PUBLIC_API_URL}/alarm` }] : []),
   ];
 
   return (

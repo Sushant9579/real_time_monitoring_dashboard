@@ -35,20 +35,20 @@ export default function Head(){
 
    const pathname = usePathname();
   // Hide logout button on login page
-  const showLogout = pathname !== "/login";
+  const showLogout = pathname !== `${process.env.NEXT_PUBLIC_API_URL}/login`;
    
     return <header className="sticky top-0 z-100">
             <section className="flex justify-between py-3 bg-violet-500 w-full">
                 <div className="flex justify-center items-center gap-2">
                     {/* <span className="mx-2 text-lg cursor-pointer"><GiHamburgerMenu onClick={()=>setOpenDiv(true)}/></span> */}
                     {showLogout && <ul className="max-sm:hidden text-center text-white flex gap-3 ml-6 font-semibold text-shadow-violet-50">
-                        <li><Link href="/">Dashboard</Link>             </li>
-                        <li><Link href="/trend">Trend</Link>            </li>
-                        <li><Link href="/ctrend">Custom Trend</Link>    </li>
-                        <li><Link href="/datalog">Data Log</Link>       </li>
-                        <li><Link href="/report">Report</Link>          </li>
-                        {(showall && showalarm) && <li><Link href="/user">User</Link> </li>}
-                        {showalarm && <li><Link href="/alarm">Alarms</Link>          </li>}
+                        <li><Link href={`${process.env.NEXT_PUBLIC_API_URL}/`}>Dashboard</Link>             </li>
+                        <li><Link href={`${process.env.NEXT_PUBLIC_API_URL}/trend`}>Trend</Link>            </li>
+                        <li><Link href={`${process.env.NEXT_PUBLIC_API_URL}/ctrend`}>Custom Trend</Link>    </li>
+                        <li><Link href={`${process.env.NEXT_PUBLIC_API_URL}/datalog`}>Data Log</Link>       </li>
+                        <li><Link href={`${process.env.NEXT_PUBLIC_API_URL}/report`}>Report</Link>          </li>
+                        {(showall && showalarm) && <li><Link href={`${process.env.NEXT_PUBLIC_API_URL}/user`}>User</Link> </li>}
+                        {showalarm && <li><Link href={`${process.env.NEXT_PUBLIC_API_URL}/alarm`}>Alarms</Link>          </li>}
                     </ul>}
                     {showLogout && <div className="sm:hidden ml-6"><Dropdown /></div>}
                 </div>
@@ -63,15 +63,15 @@ export default function Head(){
                     </div>
                 </div>} */}
                 <div className="mx-2 flex items-center gap-x-3">
-                    <span className="text-white font-semibold text-shadow-voilet-50">{pathname == '/login' ? "Login" 
-                                                                                        : pathname == '/' ? "Dashboard" :
-                                                                                        pathname == '/trend' ? "Trends" :
-                                                                                        pathname == '/ctrend' ? "Custom Trends":
-                                                                                        pathname == '/datalog' ? "Data Log" :
-                                                                                        pathname == '/report' ? "Report" :
-                                                                                        pathname == '/user' ? "User" :
-                                                                                        pathname == '/alarm' ? "Alarm" : ""} Page</span>
-                    {showLogout && <button className="cursor-pointer bg-violet-200 px-4 py-2 font-semibold rounded-4xl" onClick={()=>{router.push('/login'); localStorage.removeItem('User')}}>Logout</button>}
+                    <span className="text-white font-semibold text-shadow-voilet-50">{pathname == `${process.env.NEXT_PUBLIC_API_URL}/login` ? "Login" :
+                                                                                        pathname == `${process.env.NEXT_PUBLIC_API_URL}/` ? "Dashboard" :
+                                                                                        pathname == `${process.env.NEXT_PUBLIC_API_URL}/trend` ? "Trends" :
+                                                                                        pathname == `${process.env.NEXT_PUBLIC_API_URL}/ctrend` ? "Custom Trends":
+                                                                                        pathname == `${process.env.NEXT_PUBLIC_API_URL}/datalog` ? "Data Log" :
+                                                                                        pathname == `${process.env.NEXT_PUBLIC_API_URL}/report` ? "Report" :
+                                                                                        pathname == `${process.env.NEXT_PUBLIC_API_URL}/user` ? "User" :
+                                                                                        pathname == `${process.env.NEXT_PUBLIC_API_URL}/alarm` ? "Alarm" : ""} Page</span>
+                    {showLogout && <button className="cursor-pointer bg-violet-200 px-4 py-2 font-semibold rounded-4xl" onClick={()=>{router.push(`${process.env.NEXT_PUBLIC_API_URL}/login`); localStorage.removeItem('User')}}>Logout</button>}
                 </div>
             </section>
     </header>

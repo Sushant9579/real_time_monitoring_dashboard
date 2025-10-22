@@ -43,10 +43,11 @@ export async function GET( req: Request, { params }: { params: Promise<{ machine
       count: result.rows.length,
       data: result.rows,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("Error fetching datewise data:", error);
+    const errorMessage = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { success: false, message: "Database error", error: error.message },
+      { success: false, message: "Database error", error: errorMessage },
       { status: 500 }
     );
   }

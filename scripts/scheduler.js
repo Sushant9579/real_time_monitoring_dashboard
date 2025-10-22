@@ -95,7 +95,7 @@ async function insertAndPublishData() {
 }
 
 // ========== Schedule Publishing ==========
-setInterval(insertAndPublishData, 1000); //240000)  every 4 minutes
+setInterval(insertAndPublishData, 240000); //240000)  every 4 minutes
 
 // Optional: publish once immediately when starting
 insertAndPublishData();

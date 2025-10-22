@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import pool from "@/lib/db";
 
 //  GET all alarms (Unacknowledged first)
-export async function GET(_request: NextRequest) {
+export async function GET() {
   try {
     const result = await pool.query(
       `SELECT * FROM Alarm

@@ -21,7 +21,7 @@ export default function Alarm() {
   useEffect(() => {
     const userData = localStorage.getItem("User");
     if (!userData) {
-      router.push("/login");
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/login`);
       return;
     }
 
@@ -30,13 +30,13 @@ export default function Alarm() {
     setAcknowledgerName(parsed.Username);
 
     if (role !== "Admin" && role !== "SuperVisor") {
-      router.push("/");
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/`);
       return;
     }
 
     async function fetchAlarms() {
       try {
-        const res = await fetch("/api/alarm");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/alarm`);
         if (!res.ok) throw new Error("Failed to fetch alarms");
         const data = await res.json();
         setAlarms(data);
@@ -53,14 +53,14 @@ export default function Alarm() {
   }, [router]);
 
   const acknowledgeAlarm = async (id: number) => {
-    const res = await fetch(`/api/alarm`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/alarm`, {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, acknowledgeBy: acknowledgerName }),
     });
 
     if (res.ok) {
-      const updated = await fetch("/api/alarm").then((r) => r.json());
+      const updated = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/alarm`).then((r) => r.json());
       setAlarms(updated);
     } else {
       alert("Failed to acknowledge alarm");

@@ -38,11 +38,11 @@ export default function Home() {
      useEffect(()=>{
         const istrue = localStorage.getItem('User');
         if(!istrue){
-          router.push('/login')
+          router.push(`${process.env.NEXT_PUBLIC_API_URL}/login`)
         }
       const fetchMachineStatus = async () => {
       try {
-        const res = await fetch("/api/checkmachine");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkmachine`);
         const data = await res.json();
         if (data.success) setMachineStatus(data.machines);
       } catch (err) {
@@ -51,7 +51,7 @@ export default function Home() {
     };
       const fetchAlarmStatus = async () => {
       try {
-        const res = await fetch("/api/checkalarm");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkalarm`);
         const data = await res.json();
         if (data.success) setAlarmStatus(data.machines);
       } catch (err) {
@@ -66,7 +66,7 @@ export default function Home() {
        if(machineName !== null ){
         const getGaugeData = async ()=>{
         try {
-        const res = await fetch(`/api/machine/${machineName}`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/machine/${machineName}`);
         const data = await res.json();
         if (data.success) setGaugeData(data.data);
       } catch (err) {
@@ -75,7 +75,7 @@ export default function Home() {
        };
        const getLineChartData = async ()=>{
          try {
-        const res = await fetch(`/api/machine/${machineName}/last10`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/machine/${machineName}/last10`);
         const data = await res.json();
         if (data.success) setLinechartData(data.data);
       } catch (err) {

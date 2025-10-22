@@ -1,7 +1,7 @@
 import pool from '@/lib/db';
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 
-export async function GET(req: NextRequest) {
+export async function GET() {
   try {
     // Query distinct machines that have logged data in the last minute
     const result = await pool.query(

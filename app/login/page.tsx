@@ -10,15 +10,15 @@ export default function LoginPage() {
   useEffect(()=>{
     const istrue = localStorage.getItem('User');
     if(istrue){
-      router.push('/')
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/`)
     }
-  },[])
+  },[router])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
     try {
-      const res = await fetch("/api/login", {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,9 +37,9 @@ export default function LoginPage() {
       }
     
       localStorage.setItem('User',JSON.stringify(apiData))
-      router.push('/')
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/`)
       window.location.reload();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.log(err);
     }
   };

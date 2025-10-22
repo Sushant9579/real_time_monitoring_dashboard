@@ -23,20 +23,20 @@ export default function UserPage() {
   useEffect(() => {
     const isCheck = localStorage.getItem("User");
     if (!isCheck) {
-      router.push("/login");
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/login`);
       return;
     } else{
       const parsed = JSON.parse(isCheck);
       const role = parsed.Role;
       if(role !== 'Admin'){
-        router.push('/')
+        router.push(`${process.env.NEXT_PUBLIC_API_URL}/`)
         return;
       }
     }
 
     const fetchUsers = async () => {
       try {
-        const res = await fetch("/api/users");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`);
         const data = await res.json();
         if (data.success) setUsers(data.users);
       } catch (err) {
@@ -57,7 +57,7 @@ export default function UserPage() {
     try {
       if (editingId !== null) {
         // Update user
-        const res = await fetch(`/api/users/${editingId}`, {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${editingId}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, role,password }),
@@ -71,7 +71,7 @@ export default function UserPage() {
         }
       } else {
         // Add new user
-        const res = await fetch("/api/users", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password, role }),
@@ -100,7 +100,7 @@ export default function UserPage() {
   const handleDelete = async (id: number) => {
     if (!confirm("Are you sure you want to delete this user?")) return;
     try {
-      const res = await fetch(`/api/users/${id}`, { method: "DELETE" });
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${id}`, { method: "DELETE" });
       const data = await res.json();
       if (data.success) setUsers((prev) => prev.filter((u) => u.id !== id));
     } catch (err) {

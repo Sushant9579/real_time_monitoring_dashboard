@@ -55,11 +55,11 @@ export default function Report() {
   // --- Fetch machine status + check login
   useEffect(() => {
     const user = localStorage.getItem("User");
-    if (!user) router.push("/login");
+    if (!user) router.push(`${process.env.NEXT_PUBLIC_API_URL}/login`);
 
     const fetchMachineStatus = async () => {
       try {
-        const res = await fetch("/api/checkmachine");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkmachine`);
         const data = await res.json();
         if (data.success) setMachineStatus(data.machines);
       } catch (err) {
@@ -68,7 +68,7 @@ export default function Report() {
     };
     const fetchAlarmStatus = async () => {
       try {
-        const res = await fetch("/api/checkalarm");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkalarm`);
         const data = await res.json();
         if (data.success) setAlarmStatus(data.machines);
       } catch (err) {
@@ -91,7 +91,7 @@ export default function Report() {
       try {
         // Fetch Summary
         const summaryRes = await fetch(
-          `/api/report/summary?start=${parsedStart}&end=${parsedEnd}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/report/summary?start=${parsedStart}&end=${parsedEnd}`
         );
         const summaryData = await summaryRes.json();
         if (!summaryRes.ok) throw new Error(summaryData.error || "Failed to fetch summary");
@@ -100,7 +100,7 @@ export default function Report() {
         // Fetch Detailed (only when machine selected)
         if (machineName) {
           const detailRes = await fetch(
-            `/api/report/detailed/${machineName}?start=${parsedStart}&end=${parsedEnd}`
+            `${process.env.NEXT_PUBLIC_API_URL}/api/report/detailed/${machineName}?start=${parsedStart}&end=${parsedEnd}`
           );
           const detailData = await detailRes.json();
           if (!detailRes.ok) throw new Error(detailData.error || "Failed to fetch detailed data");

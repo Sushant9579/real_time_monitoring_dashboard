@@ -39,12 +39,12 @@ export default function CustomTrend() {
   useEffect(() => {
     const isTrue = localStorage.getItem("User");
     if (!isTrue) {
-      router.push("/login");
+      router.push(`${process.env.NEXT_PUBLIC_API_URL}/login`);
     }
 
     const fetchMachineStatus = async () => {
       try {
-        const res = await fetch("/api/checkmachine");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkmachine`);
         const data = await res.json();
         if (data.success) setMachineStatus(data.machines);
       } catch (err) {
@@ -53,7 +53,7 @@ export default function CustomTrend() {
     };
     const fetchAlarmStatus = async () => {
       try {
-        const res = await fetch("/api/checkalarm");
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/checkalarm`);
         const data = await res.json();
         if (data.success) setAlarmStatus(data.machines);
       } catch (err) {
@@ -74,7 +74,7 @@ export default function CustomTrend() {
 
       try {
         const res = await fetch(
-          `/api/customtrend/${machineName}?start=${parsedStartDate}&end=${parsedEndDate}`
+          `${process.env.NEXT_PUBLIC_API_URL}/api/customtrend/${machineName}?start=${parsedStartDate}&end=${parsedEndDate}`
         );
         const data = await res.json();
 

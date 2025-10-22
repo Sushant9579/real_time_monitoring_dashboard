@@ -2,9 +2,9 @@ import { NextResponse } from "next/server";
 import pool from "@/lib/db";
 
 // Update user data
-export async function PUT(req: Request, { params }: { params:Promise <{ id: number }> }) {
+export async function PUT(req: Request, { params }: { params:Promise <{ id: string }> }) {
   const param = await params;
-  const userId = param.id
+  const userId = Number(param.id)
   try {
     const body = await req.json();
     const { name, email, role,password } = body;
@@ -30,9 +30,9 @@ export async function PUT(req: Request, { params }: { params:Promise <{ id: numb
 }
 
 // Delete user
-export async function DELETE(_: Request, { params }: { params:Promise <{ id: number }> }) {
+export async function DELETE(_: Request, { params }: { params:Promise <{ id: string }> }) {
   const param =await params;
-  const userId = param.id
+  const userId = Number(param.id)
 
   try {
     const result = await pool.query("DELETE FROM user_data WHERE id = $1 RETURNING *", [userId]);
