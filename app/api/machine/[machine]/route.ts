@@ -10,7 +10,7 @@ export async function GET(req: Request, { params }: { params:Promise< { machine:
       `SELECT motor_temperature,vibration,speed,bearing_temperature,load_current,power_consumption,oil_pressure, datetime
        FROM machine_data
        WHERE machine = $1
-       ORDER BY datetime DESC
+       ORDER BY id DESC
        LIMIT 1`,
       [machine]
     );
